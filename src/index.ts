@@ -1,18 +1,17 @@
+import type { ParseResult } from "./structure";
 import { parseSSEFields } from "./fields";
-import { ParseResult } from "./structure";
 
+export function parseSSE(eventChunk: string): ParseResult {
+  const eventList = eventChunk.split("\n\n");
+  const restString = eventList.pop()!;
 
-export const parseSSE = (eventChunk: string): ParseResult => {
-    const eventList = eventChunk.split('\n\n');
-    const restString = eventList.pop()!;
+  const data = eventList.map((event) => {
+    const eventFields = event.split("\n");
+    return parseSSEFields(eventFields);
+  });
 
-    const data = eventList.map((event) => {
-        const eventFields = event.split('\n');
-        return parseSSEFields(eventFields);    
-    });
-
-    return {
-        restString,
-        data,
-    };
+  return {
+    restString,
+    data,
+  };
 }

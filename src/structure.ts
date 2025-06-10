@@ -1,11 +1,11 @@
 export interface SSEEvent {
-    event?: string;
-    data?: string;
-    id?: string;
-    retry?: number;
+  event?: string;
+  data?: string;
+  id?: string;
+  retry?: number;
 }
 
 export interface ParseResult {
-    restString: string;
-    data: Array<SSEEvent>;
+  restString: string;
+  data: Array<SSEEvent>;
 }

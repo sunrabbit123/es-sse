@@ -30,10 +30,10 @@ yarn add es-sse
 ## Usage
 
 ```typescript
-import { parseSSE } from 'es-sse';
+import { parseSSE } from "es-sse";
 
 // Parse a single event
-const eventChunk = 'event: test-event\ndata: test-data\n\n';
+const eventChunk = "event: test-event\ndata: test-data\n\n";
 const result = parseSSE(eventChunk);
 
 // Result will be:
@@ -46,26 +46,26 @@ const result = parseSSE(eventChunk);
 // }
 
 // Handle incomplete events with restString
-let buffer = '';
+let buffer = "";
 const chunks = [
-  'event: first\ndata: first-data\n\nevent: second\ndata: second-data\n\nevent: third\ndata: third',
-  '-data\n\n'
+  "event: first\ndata: first-data\n\nevent: second\ndata: second-data\n\nevent: third\ndata: third",
+  "-data\n\n"
 ];
 
 // Process chunks
 for (const chunk of chunks) {
   buffer += chunk;
   const result = parseSSE(buffer);
-  
+
   // Process complete events
   for (const event of result.data) {
-    console.log('Received event:', event);
+    console.log("Received event:", event);
   }
-  
+
   // Keep the rest for next iteration
   buffer = result.restString;
 }
 
 // Final buffer state
-console.log('Remaining buffer:', buffer); // Should be empty
+console.log("Remaining buffer:", buffer); // Should be empty
 ```

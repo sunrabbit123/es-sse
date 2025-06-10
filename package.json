@@ -1,30 +1,15 @@
 {
   "name": "es-sse",
-  "version": "1.0.5",
-  "description": "A Server-Sent Events (SSE) parsing library built with modern design patterns",
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
+  "version": "1.0.5",
+  "packageManager": "pnpm@10.6.4",
+  "description": "A Server-Sent Events (SSE) parsing library built with modern design patterns",
+  "author": "sunrabbit123 <qudwls185@naver.com>",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/sunrabbit123/es-sse.git"
   },
-  "scripts": {
-    "test": "vitest --coverage",
-    "build": "tsup",
-    "release": "pnpm build && publint && bumpp",
-    "prepack": "pnpm build"
-  },
-  "files": [
-    "dist",
-    "README.md",
-    "package.json"
-  ],
   "keywords": [
     "sse",
     "server-sent-events",
@@ -35,12 +20,34 @@
     "parser",
     "typescript"
   ],
-  "author": "sunrabbit123 <qudwls185@naver.com>",
-  "license": "Apache-2.0",
-  "packageManager": "pnpm@10.6.4",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "test": "vitest --coverage",
+    "build": "tsup",
+    "release": "pnpm build && publint && pnpm check && bumpp",
+    "prepack": "pnpm build",
+    "format": "eslint --fix",
+    "lint": "eslint",
+    "spell-check": "typos",
+    "check": "pnpm lint && pnpm spell-check"
+  },
   "devDependencies": {
+    "@antfu/eslint-config": "^4.14.1",
     "@vitest/coverage-istanbul": "^3.2.3",
     "bumpp": "^10.1.1",
+    "eslint": "^9.28.0",
+    "eslint-plugin-format": "^1.0.1",
     "publint": "^0.3.12",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
