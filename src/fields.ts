@@ -1,10 +1,12 @@
 import { SSEEvent } from "./structure";
 
+const sep = ': ';
 export const parseSSEFields = (fields: string[]): SSEEvent => {
     const result: SSEEvent = {};
 
     fields.forEach((field) => {
-        const [key, value] = field.split(':');
+        const [key, ...values] = field.split(sep);
+        const value = values.join(sep);
         switch (key) {
             case "event":
                 result.event = value;
