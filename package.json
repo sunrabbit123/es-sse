@@ -1,0 +1,13 @@
+{
+  "name": "es-sse",
+  "version": "1.0.0",
+  "description": "A Server-Sent Events (SSE) parsing library built with modern design patterns",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "sunrabbit123 <qudwls185@naver.com>",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.6.4"
+}
