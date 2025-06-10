@@ -6,7 +6,16 @@
   "scripts": {
     "test": "vitest --coverage"
   },
-  "keywords": [],
+  "keywords": [
+    "sse",
+    "server-sent-events",
+    "eventsource",
+    "event-stream",
+    "real-time",
+    "streaming",
+    "parser",
+    "typescript"
+  ],
   "author": "sunrabbit123 <qudwls185@naver.com>",
   "license": "Apache-2.0",
   "packageManager": "pnpm@10.6.4",
