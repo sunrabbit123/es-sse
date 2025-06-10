@@ -9,5 +9,8 @@
   "keywords": [],
   "author": "sunrabbit123 <qudwls185@naver.com>",
   "license": "Apache-2.0",
-  "packageManager": "pnpm@10.6.4"
+  "packageManager": "pnpm@10.6.4",
+  "devDependencies": {
+    "vitest": "^3.2.3"
+  }
 }
