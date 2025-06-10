@@ -4,7 +4,8 @@
   "description": "A Server-Sent Events (SSE) parsing library built with modern design patterns",
   "main": "index.js",
   "scripts": {
-    "test": "vitest --coverage"
+    "test": "vitest --coverage",
+    "build": "tsup"
   },
   "keywords": [
     "sse",
@@ -21,7 +22,40 @@
   "packageManager": "pnpm@10.6.4",
   "devDependencies": {
     "@vitest/coverage-istanbul": "^3.2.3",
+    "bumpp": "^10.1.1",
+    "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.3"
+  },
+  "changelogithub": {
+    "types": {
+      "feat": {
+        "title": "🚀 Features"
+      },
+      "fix": {
+        "title": "🐞 Bug Fixes"
+      },
+      "perf": {
+        "title": "🏎 Performance"
+      },
+      "docs": {
+        "title": "📝 Documentation"
+      },
+      "test": {
+        "title": "✅ Tests"
+      },
+      "ci": {
+        "title": "🤖 CI"
+      },
+      "style": {
+        "title": "🎨 Styles"
+      },
+      "build": {
+        "title": "📦 Build"
+      },
+      "refactor": {
+        "title": "🔨 Code Refactoring"
+      }
+    }
   }
 }
