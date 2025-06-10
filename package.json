@@ -1,6 +1,6 @@
 {
   "name": "es-sse",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Server-Sent Events (SSE) parsing library built with modern design patterns",
   "type": "module",
   "exports": {
