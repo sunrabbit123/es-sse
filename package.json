@@ -5,8 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest --coverage",
-    "build": "tsup"
+    "build": "tsup",
+    "release": "bumpp",
+    "prepack": "pnpm build"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
   "keywords": [
     "sse",
     "server-sent-events",
