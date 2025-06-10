@@ -10,4 +10,5 @@ extend-exclude = [
   "dist",
   "coverage",
   "node_modules",
+  "pnpm-lock.yaml",
 ]
