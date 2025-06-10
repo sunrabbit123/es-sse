@@ -1,12 +1,19 @@
 {
   "name": "es-sse",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Server-Sent Events (SSE) parsing library built with modern design patterns",
-  "main": "index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "scripts": {
     "test": "vitest --coverage",
     "build": "tsup",
-    "release": "bumpp",
+    "release": "pnpm build && publint && bumpp",
     "prepack": "pnpm build"
   },
   "files": [
@@ -30,6 +37,7 @@
   "devDependencies": {
     "@vitest/coverage-istanbul": "^3.2.3",
     "bumpp": "^10.1.1",
+    "publint": "^0.3.12",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.3"
