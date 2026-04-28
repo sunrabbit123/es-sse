@@ -76,13 +76,6 @@ describe("parseSSE", () => {
     expect(result.restString).toBe("");
   });
 
-  it("should handle empty event chunk with empty string", () => {
-    const eventChunk = "";
-    const result = parseSSE(eventChunk);
-    expect(result.data).toHaveLength(0);
-    expect(result.restString).toBe("");
-  });
-
   it("should handle event chunk with only whitespace", () => {
     const eventChunk = "   \n  \n  ";
     const result = parseSSE(eventChunk);
@@ -90,38 +83,61 @@ describe("parseSSE", () => {
     expect(result.restString).toBe("   \n  \n  ");
   });
 
-  it("should handle event with malformed field names", () => {
+  it("should drop events made entirely of unknown fields (no data)", () => {
     const eventChunk = "evt: test-event\ndat: test-data\n\n";
     const result = parseSSE(eventChunk);
-    expect(result.data).toHaveLength(1);
-    expect(result.data[0]).toEqual({});
+    expect(result.data).toHaveLength(0);
     expect(result.restString).toBe("");
   });
 
-  it("should handle event with mixed valid and invalid fields", () => {
-    const eventChunk = "event: test-event\ndat: test-data\nid: 123\n\n";
+  it("should drop events that have no data field even if other fields are set", () => {
+    const eventChunk = "event: test-event\nid: 123\n\n";
     const result = parseSSE(eventChunk);
-    expect(result.data).toHaveLength(1);
-    expect(result.data[0]).toEqual({
-      event: "test-event",
-      id: "123",
-    });
+    expect(result.data).toHaveLength(0);
     expect(result.restString).toBe("");
   });
 
-  it("should handle event with empty field names", () => {
-    const eventChunk = ": test-event\n: test-data\n\n";
+  it("should treat lines starting with colon as comments", () => {
+    const eventChunk = ": heartbeat\n: keep-alive\ndata: hi\n\n";
     const result = parseSSE(eventChunk);
-    expect(result.data).toHaveLength(1);
-    expect(result.data[0]).toEqual({});
+    expect(result.data).toEqual([{ data: "hi" }]);
     expect(result.restString).toBe("");
   });
 
-  it("should handle event with special characters in field names", () => {
-    const eventChunk = "event@: test-event\ndata#: test-data\n\n";
+  it("should parse events separated by CRLF line terminators", () => {
+    const eventChunk = "event: test-event\r\ndata: test-data\r\n\r\n";
     const result = parseSSE(eventChunk);
-    expect(result.data).toHaveLength(1);
-    expect(result.data[0]).toEqual({});
+    expect(result.data).toEqual([{ event: "test-event", data: "test-data" }]);
     expect(result.restString).toBe("");
+  });
+
+  it("should parse events separated by lone CR line terminators", () => {
+    const eventChunk = "event: test-event\rdata: test-data\r\r";
+    const result = parseSSE(eventChunk);
+    expect(result.data).toEqual([{ event: "test-event", data: "test-data" }]);
+    expect(result.restString).toBe("");
+  });
+
+  it("should hold a trailing lone CR in restString so CRLF pairs aren't split", () => {
+    const first = parseSSE("data: a\r");
+    expect(first.data).toHaveLength(0);
+    expect(first.restString).toBe("data: a\r");
+
+    const second = parseSSE(`${first.restString}\ndata: b\n\n`);
+    expect(second.data).toEqual([{ data: "a\nb" }]);
+    expect(second.restString).toBe("");
+  });
+
+  it("should strip a leading BOM from the stream", () => {
+    const eventChunk = "﻿data: hello\n\n";
+    const result = parseSSE(eventChunk);
+    expect(result.data).toEqual([{ data: "hello" }]);
+    expect(result.restString).toBe("");
+  });
+
+  it("should ignore retry values that aren't strictly digits", () => {
+    const eventChunk = "retry: 5s\ndata: x\n\n";
+    const result = parseSSE(eventChunk);
+    expect(result.data).toEqual([{ data: "x" }]);
   });
 });
